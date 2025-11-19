@@ -16,7 +16,16 @@ namespace SmartExpenseTracker
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SmartExpenseTrackerForm());
+
+            using (var loginForm = new LoginForm())
+            {
+                // Show login form first
+                if (loginForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Only open main form if login successful
+                    Application.Run(new SmartExpenseTrackerForm(loginForm.LoggedInUser));
+                }
+            }
         }
     }
 }
